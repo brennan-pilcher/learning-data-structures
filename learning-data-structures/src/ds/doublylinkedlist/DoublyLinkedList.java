@@ -83,7 +83,7 @@ public class DoublyLinkedList
 	{
 		if (isEmpty())
 		{
-			throw new EmptyStructureException("");
+			throw new EmptyStructureException("Cannot delete the last node because the linked list is empty.");
 		}
 		else
 		{
@@ -103,16 +103,127 @@ public class DoublyLinkedList
 		}
 	}
 	
-	/*
+	
 	public boolean insertAfter (Object key, Object data) throws EmptyStructureException
 	{
-		Node current = first; // start from the beginning of the list
-		while (current.data != key) // if the key is not in the current node
+		//
+		// 'current' is the target node to insert after
+		//
+		if (isEmpty())
 		{
+			throw new EmptyStructureException("Cannot insert after the specified node because the linked list is empty.");
+		}
+		else
+		{
+			Node current = new Node();
+			current = first; // start from the beginning of the list
+			while (current.data != key) // if the key is not in the current node
+			{
+				current = current.next;
+				if(current == null) // end of list reached
+				{
+					return false;
+				}
+			}
+			
+	
+			Node newNode = new Node(); // declare and instantiate new node
+			newNode.data = data;
+			
+			if (current == last) // if last
+			{
+				current.next = null; // last has no value for next
+				last = newNode; // become last
+			}
+			else
+			{
+				newNode.next = current.next; // new node's next becomes current's next
+				current.next.previous = newNode; // node after current's 'previous' is the new node
+			}
+	
+			newNode.previous = current; // new node's previous is current
+			current.next = newNode; // current's next is the new node
+			
+			return true;
+		}
+	}
+	
+	public Node deleteKey (Object key) throws EmptyStructureException
+	{
+		//
+		// 'current' is the target node to insert after
+		//
+		if (isEmpty())
+		{
+			throw new EmptyStructureException("Cannot delete the specified node because the linked list is empty.");
+		}
+		else
+		{
+			Node current = new Node();
+			current = first;
+			
+			while (current.data != key)
+			{
+				current = current.next;
+				if (current.next == null) // reached end of list without locating key
+				{
+					return null;
+				}
+			}
+			
+			if (current == first)
+			{
+				first = current.next; // new first is current's next
+				current.next.previous = null; // current.next's 'previous' becomes null because current.next is becoming first
+			}
+			else if (current == last)
+			{
+				last = current.previous; // new last is current's previous
+				current.previous.next = null; // current.previous's 'next' becomes null because current.previous is becoming last
+			}
+			else
+			{
+				current.previous.next = current.next; // current.previous's 'next' becomes the current's next as node is removed
+				current.next.previous = current.previous; // current.next's 'previous' becomes the current's previous as node is removed
+			}
+			
+			return current;
+		}
+	}
+	
+	public Object displayFirst ()
+	{
+		return first.data;
+	}
+
+	public Object displayLast ()
+	{
+		return last.data;
+	}
+	
+	
+	public void displayForward ()
+	{
+		System.out.println("List (first --> last):");
+		Node current = first;
+		while (current != null)
+		{
+			current.displayData();
 			current = current.next;
 		}
 	}
-	*/
+	
+
+	public void displayBackward ()
+	{
+		System.out.println("List (last --> first):");
+		Node current = last;
+		while (current != null)
+		{
+			current.displayData();
+			current = current.previous;
+		}
+	}
 	
 	
 }

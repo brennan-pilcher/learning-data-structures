@@ -1,44 +1,33 @@
 package ds.stack;
 
 import ds.core.*;
+import ds.doublylinkedlist.*;
 import java.util.NoSuchElementException;
 
 public class Stack
 {
-	
-	// test commit
 
-	private int maxSize;
-	private Object[] stackArray;
-	private int top;
+	private DoublyLinkedList stackList;
+	private int numItems; // counter to hold the number of items
 	
-	public Stack (int size)
+	public Stack ()
 	{ // basic constructor
-		this.maxSize = size;
-		this.stackArray = new Object[maxSize];
-		this.top = -1;
+		this.stackList = new DoublyLinkedList();
+		this.numItems = 0;
 	}
 	
-	public void push (Object item) throws FullStructureException
+	public void push (Object item)
 	{
-		if( !isFull() )
-		{
-			top++; // increment top index
-			stackArray[top] = item;
-		}
-		else
-		{ // throw error if full
-			// TODO throw a more appropriate error
-			throw new FullStructureException("The stack is full.");
-		}
+		numItems++; // increment the number of items in the stack
+		stackList.insertFirst(item);
 	}
 	
 	public Object pop () throws EmptyStructureException
 	{
 		if( !isEmpty() )
 		{
-			top--; // decrement top index
-			return stackArray[top+1]; // push item at previous top index from when function was called
+			numItems--; // decrement the number of items in the stack
+			return stackList.deleteFirst();
 		}
 		else
 		{ // throw error if empty
@@ -50,7 +39,7 @@ public class Stack
 	{ // take a look at item on top without popping
 		if( !isEmpty() )
 		{
-			return stackArray[top];
+			return stackList.displayFirst();
 		}
 		else
 		{ // throw error if empty
@@ -58,33 +47,15 @@ public class Stack
 		}
 	}
 	
-	// overloaded method to handle peeking at a specific index
-	public Object peek (int index)
-	{ // take a look at item on top without popping
-		if( !isEmpty() && index > -1 && index < stackArray.length  )
-		{
-			return stackArray[index];
-		}
-		else
-		{ // throw error if empty
-			throw new NoSuchElementException("There is no element of the stack at position " + index + ".");
-		}
-	}
-	
 	
 	public boolean isEmpty ()
 	{
-		return (top == -1); // if empty return false, else true
-	}
-	
-	public boolean isFull ()
-	{
-		return (top == maxSize - 1); // if full return true, else false
+		return (stackList.isEmpty()); // if empty return false, else true
 	}
 	
 	public long size ()
 	{
-		return stackArray.length;
+		return numItems;
 	}
 	
 }

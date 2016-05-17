@@ -7,8 +7,8 @@ public class App
 
 	public static void main(String[] args) throws EmptyStructureException, FullStructureException
 	{
-		 /*
-		Stack theStack = new Stack(5);
+		 
+		Stack theStack = new Stack();
 		
 		theStack.push(10);
 		theStack.push(20);
@@ -17,34 +17,35 @@ public class App
 		theStack.push(50);
 		System.out.println( "peek: " + theStack.peek() );
 		
-		// theStack.push(60);
-		// should error | DONE
 		
-		System.out.println( theStack.pop() );
-		System.out.println( theStack.pop() );
-		System.out.println( theStack.pop() );
-		System.out.println( theStack.pop() );
-		
+		theStack.pop();
+		System.out.println( "peek: " + theStack.peek() );
+		theStack.pop();
+		System.out.println( "peek: " + theStack.peek() );
+		theStack.pop();
+		System.out.println( "peek: " + theStack.peek() );
+		theStack.pop();
 		System.out.println( "peek: " + theStack.peek() );
 		
-		System.out.println( theStack.pop() );
-		
 		// should error | DONE
-		//System.out.println( theStack.pop() );
+		//theStack.pop();
+		//System.out.println( "peek: " + theStack.peek() );
 		 
-		 */
+		 
 		
 		String test = reverseString("testing string reversal 123");
+		
+		System.out.println( test );
 		
 		
 	}
 	
-	public static String reverseString (String str) throws EmptyStructureException, FullStructureException
+	public static String reverseString (String str) throws EmptyStructureException
 	{
 		StringBuilder stringBuilder = new StringBuilder();
 		String reversed;
 		
-		Stack strToReverse = new Stack(str.length());
+		Stack strToReverse = new Stack();
 		
 		while(str.length() > 0)
 		{
@@ -60,8 +61,8 @@ public class App
 		reversed = stringBuilder.toString();
 		
 		System.out.println( "peek: " + strToReverse.peek() );
-		System.out.println( "peek at pos 0: " + strToReverse.peek(0) );
-		System.out.println( "peek at pos 5: " + strToReverse.peek(5) );
+		//System.out.println( "peek at pos 0: " + strToReverse.peek(0) );
+		//System.out.println( "peek at pos 5: " + strToReverse.peek(5) );
 		//System.out.println( "peek at pos 50: " + strToReverse.peek(-1) );
 		
 		

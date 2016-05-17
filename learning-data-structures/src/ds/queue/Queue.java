@@ -16,8 +16,6 @@ public class Queue
 		numItems = 0; // initialize as empty
 	}
 	
-	// TODO check the entire thing
-	
 	public void enqueue (Object item)
 	{
 		queueList.insertLast(item); // place new item at the rear

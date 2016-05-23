@@ -40,13 +40,11 @@ public class Queue
 	{
 		if (queueList.isEmpty())
 		{
-			// TODO throw a more appropriate exception
 			throw new EmptyStructureException("The queue is empty.");
 		}
 		else
 		{
 			return queueList.displayFirst();
-			//return queueArray[front];
 		}
 	}
 	

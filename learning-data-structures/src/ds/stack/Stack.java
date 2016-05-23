@@ -47,6 +47,10 @@ public class Stack
 		}
 	}
 	
+	public Object peekAtIndex (long index) throws EmptyStructureException, NoSuchNodeException
+	{
+		return stackList.displayNode(stackList.peekAtIndex(index, false));
+	}
 	
 	public boolean isEmpty ()
 	{

@@ -7,11 +7,13 @@ public class DoublyLinkedList
 
 	private Node first;
 	private Node last;
+	private long size;
 	
 	public DoublyLinkedList ()
 	{
 		this.first = null;
 		this.last = null;
+		this.size = 0;
 	}
 	
 	public boolean isEmpty ()
@@ -35,6 +37,7 @@ public class DoublyLinkedList
 		}
 		
 		first = newNode; // this instance's 'first' becomes the newly created node
+		size++;
 	}
 	
 	public void insertLast (Object data)
@@ -53,6 +56,7 @@ public class DoublyLinkedList
 		}
 		
 		last = newNode;
+		size++;
 	}
 	
 	public Node deleteFirst () throws EmptyStructureException
@@ -75,6 +79,7 @@ public class DoublyLinkedList
 			}
 			
 			first = first.next; // old 'second' node becomes first
+			size--;
 			return current;
 		}
 	}
@@ -99,6 +104,7 @@ public class DoublyLinkedList
 			}
 			
 			last = last.previous; // old second to last node becomes last
+			size--;
 			return current;
 		}
 	}
@@ -106,9 +112,6 @@ public class DoublyLinkedList
 	
 	public boolean insertAfter (Object key, Object data) throws EmptyStructureException
 	{
-		//
-		// 'current' is the target node to insert after
-		//
 		if (isEmpty())
 		{
 			throw new EmptyStructureException("Cannot insert after the specified node because the linked list is empty.");
@@ -143,16 +146,109 @@ public class DoublyLinkedList
 	
 			newNode.previous = current; // new node's previous is current
 			current.next = newNode; // current's next is the new node
+			size++;
 			
 			return true;
 		}
 	}
 	
+	public Node peekAtIndex (long index, boolean deleteNode) throws EmptyStructureException, NoSuchNodeException
+	{
+		if (isEmpty())
+		{
+			throw new EmptyStructureException("Cannot peek at the specified index because the linked list is empty.");
+		}
+		else if (index >= size || index < 0)
+		{
+			throw new NoSuchNodeException("The specified index is not in the range of the linked list. index: " + index + "   size: " + size);
+		}
+		else
+		{
+			if (index == 0) // first item
+			{
+				Node current = first;
+				if (deleteNode)
+				{
+					deleteFirst();
+				}
+				
+				return current;
+			}
+			else if (index == size-1) // last item
+			{
+				Node current = last;
+				if (deleteNode)
+				{
+					deleteLast();
+				}
+				
+				return current;
+			}
+			else if (index > size/2) // closer to end of list
+			{
+				long difference = size - index;
+				
+				Node current = last;
+				while (difference > 0)
+				{
+					current = current.previous;
+					difference--;
+				}
+				
+				if (deleteNode)
+				{
+					deleteNode(current);
+				}
+				return current;
+			}
+			else  // closer to start of list
+			{
+				long difference = index;
+				
+				Node current = first;
+				while (difference > 0)
+				{
+					current = current.next;
+					difference--;
+				}
+				
+				if (deleteNode)
+				{
+					deleteNode(current);
+				}
+				
+				return current;
+			}
+		}
+	}
+	
+	public void deleteNode(Node target)
+	{
+		Node current = new Node();
+		current = target;
+		
+		if (current == first)
+		{
+			first = current.next; // new first is current's next
+			current.next.previous = null; // current.next's 'previous' becomes null because current.next is becoming first
+		}
+		else if (current == last)
+		{
+			last = current.previous; // new last is current's previous
+			current.previous.next = null; // current.previous's 'next' becomes null because current.previous is becoming last
+		}
+		else
+		{
+			current.previous.next = current.next; // current.previous's 'next' becomes the current's next as node is removed
+			current.next.previous = current.previous; // current.next's 'previous' becomes the current's previous as node is removed
+		}
+		
+		size--;
+		
+	}
+	
 	public Node deleteKey (Object key) throws EmptyStructureException
 	{
-		//
-		// 'current' is the target node to insert after
-		//
 		if (isEmpty())
 		{
 			throw new EmptyStructureException("Cannot delete the specified node because the linked list is empty.");
@@ -170,22 +266,8 @@ public class DoublyLinkedList
 					return null;
 				}
 			}
-			
-			if (current == first)
-			{
-				first = current.next; // new first is current's next
-				current.next.previous = null; // current.next's 'previous' becomes null because current.next is becoming first
-			}
-			else if (current == last)
-			{
-				last = current.previous; // new last is current's previous
-				current.previous.next = null; // current.previous's 'next' becomes null because current.previous is becoming last
-			}
-			else
-			{
-				current.previous.next = current.next; // current.previous's 'next' becomes the current's next as node is removed
-				current.next.previous = current.previous; // current.next's 'previous' becomes the current's previous as node is removed
-			}
+		
+			deleteNode(current);
 			
 			return current;
 		}
@@ -201,6 +283,11 @@ public class DoublyLinkedList
 		return last.data;
 	}
 	
+	public Object displayNode (Node current)
+	{
+		return current.data;
+	}
+	
 	
 	public void displayForward ()
 	{
@@ -212,7 +299,6 @@ public class DoublyLinkedList
 			current = current.next;
 		}
 	}
-	
 
 	public void displayBackward ()
 	{

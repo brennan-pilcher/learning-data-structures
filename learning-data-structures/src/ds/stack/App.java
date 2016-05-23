@@ -5,7 +5,7 @@ import ds.core.*;
 public class App
 {
 
-	public static void main(String[] args) throws EmptyStructureException, FullStructureException
+	public static void main(String[] args) throws EmptyStructureException, FullStructureException, NoSuchNodeException
 	{
 		 
 		Stack theStack = new Stack();
@@ -15,8 +15,13 @@ public class App
 		theStack.push(30);
 		theStack.push(40);
 		theStack.push(50);
-		System.out.println( "peek: " + theStack.peek() );
-		
+		//System.out.println( "peek: " + theStack.peek() );
+
+		System.out.println( "peek at index 0: " + theStack.peekAtIndex(0) );
+		System.out.println( "peek at index 1: " + theStack.peekAtIndex(1) );
+		System.out.println( "peek at index 2: " + theStack.peekAtIndex(2) );
+		System.out.println( "peek at index 3: " + theStack.peekAtIndex(3) );
+		System.out.println( "peek at index 4: " + theStack.peekAtIndex(4) );
 		
 		theStack.pop();
 		System.out.println( "peek: " + theStack.peek() );
